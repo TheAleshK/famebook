@@ -6,10 +6,11 @@ define(function(require, exports, module) {
   var Transitionable  = require("famous/transitions/Transitionable");
   var App             = require('core/Global');
   var Easing          = require('famous/transitions/Easing');
+  var TopView         = require('views/TopView');
   var FamScrollView   = require('views/FamScrollView');
-  var GenericSync = require("famous/inputs/GenericSync");
-  var MouseSync   = require("famous/inputs/MouseSync");
-  var TouchSync   = require("famous/inputs/TouchSync");
+  var GenericSync     = require("famous/inputs/GenericSync");
+  var MouseSync       = require("famous/inputs/MouseSync");
+  var TouchSync       = require("famous/inputs/TouchSync");
 
   GenericSync.register({
     "mouse" : MouseSync,
@@ -34,6 +35,7 @@ define(function(require, exports, module) {
 
     DISPLAY_SIZE = App.get('deviceView')['containerSize'];
 
+    _createTopView.call(this);
     _createScrollView.call(this);
 
     _setListeners.call(this);
@@ -45,6 +47,20 @@ define(function(require, exports, module) {
   FamView.DEFAULT_OPTIONS = {
     size: [undefined, undefined]
   };
+
+  function _createTopView() {
+      this.topView = new TopView();
+
+      var topModifier = new StateModifier({
+          origin: [0, 0]
+      });
+
+      var backModifier = new StateModifier({
+          transform: Transform.behind
+      });
+
+      this.add(this.topView);
+  }
 
   var scaleModifier = new Modifier({
     transform : function(){
