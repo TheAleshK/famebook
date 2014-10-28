@@ -51,14 +51,6 @@ define(function(require, exports, module) {
   function _createTopView() {
       this.topView = new TopView();
 
-      var topModifier = new StateModifier({
-          origin: [0, 0]
-      });
-
-      var backModifier = new StateModifier({
-          transform: Transform.behind
-      });
-
       this.add(this.topView);
   }
 
@@ -74,7 +66,7 @@ define(function(require, exports, module) {
     transform : function(){
       var trans = posTrans.get();
 
-      return Transform.translate(trans[0],trans[1],0);
+      return Transform.translate(trans[0],trans[1], 10);
     }
   });
 

@@ -42,15 +42,13 @@ define(function(require, exports, module) {
       size: [undefined, undefined],
       content: imageData[imageCounter],
       properties: {
-        zIndex: 2,
         pointerEvents: 'none'
       }
     });
 
     this.photoModifier = new StateModifier({
       origin: [0.5, 0],
-      align: [0.5, 0],
-      transform: Transform.translate(0, this.options.filmBorder + this.options.photoBorder, 0.1)
+      align: [0.5, 0]
     });
 
     this.mainNode.add(background);
