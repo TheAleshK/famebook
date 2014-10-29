@@ -26,21 +26,14 @@ define(function(require, exports, module) {
 
       this.sequenceFrom(surfaces);
 
-      for (var i = 0, temp, image; i < 20; i++) {
-
-        temp = new Surface({
-           content: "Surf: " + (i + 1),
-           size: [sizeX, sizeY],
-           properties: {
-             backgroundColor: "hsl(" + (i * 360 / 20) + ", 100%, 50%)",
-             paddingTop: '50px',
-             textAlign: "center",
-             fontSize: '40px'
-           }
+      for (var i = 0, strip; i < 10; i++) {
+        strip = new StripView({
+          number: i,
+          size: [sizeX, sizeY]
         });
 
-        temp.pipe(this);
-        surfaces.push(temp);
+        strip.pipe(this);
+        surfaces.push(strip);
       }
     }
 
