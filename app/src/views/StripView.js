@@ -6,12 +6,14 @@ define(function(require, exports, module) {
   var Transform     = require('famous/core/Transform');
   var StateModifier = require('famous/modifiers/StateModifier');
   var ImageSurface  = require('famous/surfaces/ImageSurface');
-  var Utility = require('famous/utilities/Utility');
+  var Utility       = require('famous/utilities/Utility');
 
   function StripView() {
     View.apply(this, arguments);
 
     _createBackground.call(this);
+    _createContent.call(this);
+    _setListeners();
   }
 
   StripView.prototype = Object.create(View.prototype);
@@ -22,19 +24,20 @@ define(function(require, exports, module) {
     direction: Utility.Direction.X,
     paddingTop: '50px',
     textAlign: "center",
-    fontSize: '50px'
+    fontSize: '40px',
+    border: 'solid 1px #f8f8f8'
   };
 
   function _createBackground() {
     var backgroundSurface = new Surface({
       size: [this.options.width, this.options.height],
-      content: 'Surface '+ this.options.number,
       properties: {
         backgroundColor: this.options.backgroundColor,
         boxShadow: '0 0 1px black',
         paddingTop: this.options.paddingTop,
         textAlign: this.options.textAlign,
-        fontSize: this.options.fontSize
+        fontSize: this.options.fontSize,
+        border: this.options.border
       }
     });
 
@@ -42,5 +45,27 @@ define(function(require, exports, module) {
     this.add(backgroundSurface);
   }
 
-  module.exports = StripView;
+  function _createContent() {
+    var that = this;
+
+    this.photoNode = new ImageSurface({
+      size: [75, 75],
+      content: this.options.imageData[this.options.number],
+      properties: {
+        pointerEvents: 'none'
+      }
+    });
+
+    this.photoModifier = new StateModifier({
+      origin: [0.5, 0],
+      align: [0.5, 0]
+    });
+
+    this.add(this.photoModifier).add(this.photoNode);
+  }
+
+  function _setListeners() {
+  }
+
+    module.exports = StripView;
 });

@@ -61,7 +61,7 @@ define(function(require, exports, module) {
   function _rotateBackgroundImage() {
       imageCounter++;
 
-      if (imageData.length < imageCounter) {
+      if (imageData.length -1 < imageCounter) {
         imageCounter = 0;
       }
       this.photoNode.setContent(imageData[imageCounter]);
