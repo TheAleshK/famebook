@@ -4,7 +4,7 @@ define(function(require, exports, module) {
   var View          = require('famous/core/View');
   var Surface       = require('famous/core/Surface');
   var Transform     = require('famous/core/Transform');
-  var StateModifier = require('famous/modifiers/StateModifier');
+  var Modifier      = require("famous/core/Modifier");
   var ImageSurface  = require('famous/surfaces/ImageSurface');
   var Utility       = require('famous/utilities/Utility');
 
@@ -22,8 +22,8 @@ define(function(require, exports, module) {
   StripView.DEFAULT_OPTIONS = {
     backgroundColor: 'white',
     direction: Utility.Direction.X,
-    paddingTop: '50px',
-    textAlign: "center",
+    marginTop: '10px',
+    textAlign: "left",
     fontSize: '40px',
     border: 'solid 1px #f8f8f8'
   };
@@ -34,9 +34,6 @@ define(function(require, exports, module) {
       properties: {
         backgroundColor: this.options.backgroundColor,
         boxShadow: '0 0 1px black',
-        paddingTop: this.options.paddingTop,
-        textAlign: this.options.textAlign,
-        fontSize: this.options.fontSize,
         border: this.options.border
       }
     });
@@ -48,20 +45,35 @@ define(function(require, exports, module) {
   function _createContent() {
     var that = this;
 
-    this.photoNode = new ImageSurface({
-      size: [75, 75],
+    var photoNode = new ImageSurface({
+      size: [100, 100],
       content: this.options.imageData[this.options.number],
       properties: {
         pointerEvents: 'none'
       }
     });
 
-    this.photoModifier = new StateModifier({
-      origin: [0.5, 0],
-      align: [0.5, 0]
+    var textNode = new Surface({
+      content: 'Darth Vader',
+      properties: {
+        marginTop: this.options.marginTop,
+        textAlign: this.options.textAlign,
+        fontSize: this.options.fontSize,
+        pointerEvents: 'none'  
+      }
+    })
+
+    var photoModifier = new Modifier({
+      transform: Transform.translate(20, 20, 0)
     });
 
-    this.add(this.photoModifier).add(this.photoNode);
+    var textModifier = new Modifier({
+      transform: Transform.translate(20, 120, 0)
+    })
+
+    this.add(photoModifier).add(photoNode);
+
+    this.add(textModifier).add(textNode);
   }
 
   function _setListeners() {
