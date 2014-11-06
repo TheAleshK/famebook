@@ -14,28 +14,28 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('build', [
-    'clean:dist',
+    // 'clean:dist',
+    'copy:dist',
+    'copy:libs',
     'lint',
     'processhtml:dist',
     'useminPrepare',
     'requirejs',
-    'concat',
-    'cssmin',
-    'uglify',
-    'copy:dist',
-    'rev',
-    'usemin',
-    'htmlmin'
+    // 'concat',
+    // 'cssmin',
+    // 'uglify',
+    // 'rev',
+    // 'usemin',
+    // 'htmlmin'
   ]);
 
   grunt.registerTask('lint', [
-    'jscs',
-    'eslint'
+    'jshint'
   ]);
   
-  grunt.registerTask('test', [
-    'lint'
-  ]);
+  // grunt.registerTask('test', [
+  //   'lint'
+  // ]);
 
   grunt.registerTask('default', [
     'build'

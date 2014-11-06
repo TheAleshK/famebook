@@ -19,7 +19,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "src/lib",
+    "app/src/lib",
     "test",
     "tests"
   ],
