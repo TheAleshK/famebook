@@ -21,8 +21,8 @@ define(function(require, exports, module) {
 
     var deviceMod = new Modifier({
       size: deviceView.getSize(),
-      origin: [0, .5],
-      transform: Transform.scale(.1, .1, 1)
+      origin: [0, 0],
+      // transform: Transform.scale(.8, .8, 1)
     });
 
     var s = (window.innerHeight-20) / Math.max(window.innerHeight-20, deviceView.getSize()[0], deviceView.getSize()[1]);

@@ -17,14 +17,14 @@ define(function(require, exports, module) {
     View.apply(this, arguments);
 
     this.rotateMod = new Modifier({
-      origin: [0.5, 0.5]
+      // origin: [0.5, 0.5]
     });
     this.node = this._add(this.rotateMod);
 
     _settings.call(this);
+    _device.call(this);
     _container.call(this);
     _content.call(this);
-    _device.call(this);
 
     this.portrait = false;
   }
@@ -32,10 +32,10 @@ define(function(require, exports, module) {
   function _content() {
     this.container.getSize();
     this.contentMod = new Modifier({
-        origin: [.5, .5]
+        //origin: [.5, .5]
     });
     this.reset = new Modifier({
-        origin: [0, 0]
+        //origin: [0, 0]
     });
     this.contentNode = this.container.add(this.contentMod).add(this.reset);
   }
@@ -104,28 +104,6 @@ define(function(require, exports, module) {
       borderWidth: 4,
       borderRadius: 2
     },
-    ipad: {
-      image: "./img/device-ipad.svg",
-      deviceRatio: 434 / 290,
-      screenWidth: .89,
-      screenHeight: .78,
-      originX: .0,
-      originY: .0,
-      defaultScreenWidth: 768,
-      borderWidth: 4,
-      borderRadius: 2
-    },
-    nexus: {
-      image: "./img/device-nexus.svg",
-      deviceRatio: 667 / 332,
-      screenWidth: .885,
-      screenHeight: .728,
-      originX: -.003,
-      originY: -.041,
-      defaultScreenWidth: 360,
-      borderWidth: 0,
-      borderRadius: 0
-    },
     rotateTransition : {
       duration: 400,
       curve: Easing.inOutBack
@@ -150,37 +128,7 @@ define(function(require, exports, module) {
       this.iFrameEl.setAttribute("src", appUrl);
     }
   };
-
-  DeviceView.prototype.setLandscape = function setLandscape() {
-    this.rotateMod.setTransform(Transform.rotateZ(Math.PI / 2), this.options.transition, function() {
-      this.contentMod.setTransform(Transform.rotateZ( -1 * Math.PI / 2), this.options.rotateTransition);
-
-      this.contentMod.setSize(
-        [this.container.getSize()[1], this.container.getSize()[0]]
-      );
-      // Reset the iFrame size
-      this.iFrameEl.style.width = this.container.getSize()[1] + "px";
-      this.iFrameEl.style.height = this.container.getSize()[0] + "px";
-    }.bind(this));
-  };
-
-  DeviceView.prototype.setPortrait = function setPortrait() {
-    this.rotateMod.setTransform(Transform.rotateZ(0), this.options.transition, function() {
-      this.contentMod.setTransform(Transform.rotateZ(0), this.options.rotateTransition);
-      this.contentMod.setSize(this.container.getSize());
-      // Reset the iFrame size
-      this.iFrameEl.style.width = this.container.getSize()[0] + "px";
-      this.iFrameEl.style.height = this.container.getSize()[1] + "px";
-    }.bind(this));
-  };
-  DeviceView.prototype.toggleOrientation = function toggleOrientation() {
-      if (false === this.portrait) {
-        this.setLandscape();
-      } else {
-        this.setPortrait();
-      }
-      this.portrait = !this.portrait;
-  };
+  
   DeviceView.prototype.getSize = function getSize() {
       return [this.options.width, this.options.height];
   };
